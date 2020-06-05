@@ -6,32 +6,53 @@ using namespace std;
 struct Node {
     string data;
     int counter;
-    Node* left;
-    Node* right;
-    Node* parent;
+    //string* values;
+    //Node** nodes;
     Node(string data1 = "") {
         data = data1;
         counter = 1;
-        left = right = parent = NULL;
     }
 };
 
-class {
+struct NodeGroup {
+    Node* nodes;
+    //Node** children; //dont know if necessary
+    //NodeGroup* parent;
+    //NodeGroup* left;
+    //NodeGroup* right;
+    NodeGroup* parentGroup;
+    NodeGroup** childGroups;
+    NodeGroup() {
+        nodes = new Node[4];
+        //children = new Node*[5];
+        parentGroup = NULL;
+        childGroups = new NodeGroup*[5];
+    };
+    ~NodeGroup() {
+        delete [] nodes;
+        //delete [] childGroups;
+    }
+};
+
+class TwoFiveTree {
     public:
         TwoFiveTree();
         ~TwoFiveTree();
         void searchWord(string word);
-		void insertWord(string word, bool start);
+		void insertWord(Node word, bool start);
         void rangeSearch(string start, string end);
         void preOrderTraversal();
         void printHeight();
     private:
+        int maxLevel;
         int nodeCount;
-        Node* root;
-        bool exists(string word);
+        int nodeGroupCount;
+        NodeGroup* root;
+        //bool hasChild;
+        Node*& exists(string word); //do this next
         Node* getNode(string word);
-        void rangeSearchHelper(Node* node, string start, string end);
-        void destructorHelper(Node* node);
-}
+        void rangeSearchHelper(NodeGroup* nodeGroup, string start, string end);
+        void destructorHelper(NodeGroup* nodeGroup);
+};
 
 #endif
