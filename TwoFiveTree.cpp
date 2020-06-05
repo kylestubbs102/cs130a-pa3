@@ -17,6 +17,7 @@ TwoFiveTree::~TwoFiveTree() {
     //destructorHelper(root);
 
     delete root;
+
     //worry about this later, tons of mistakes
 }
 
@@ -61,7 +62,7 @@ void TwoFiveTree::insertWord(Node word, bool start) {
         nodeCount++; //???
         nodeGroupCount++; //???
         maxLevel++; //might need this for height function
-        root = new NodeGroup;
+        //root = new NodeGroup;
         root->nodes[0].counter = word.counter;
         root->nodes[0].data = word.data; //maybe change this to just = node later
         if (!start) {
@@ -139,6 +140,8 @@ void TwoFiveTree::insertWord(Node word, bool start) {
                         break;
                     } //sets parentGroup correctly 
                 }
+                tempGroup = NULL;
+                delete tempGroup;
                 //group->parentGroup->childGroups[count+1];
                 //return; //maybe change back to break
             }
@@ -194,6 +197,11 @@ void TwoFiveTree::insertWord(Node word, bool start) {
             nodeGroup->nodes[0] = arr[3];
             nodeGroup->nodes[1] = arr[4];
 
+            Node tempNode;
+            for (int i = 0; i < 5; i++)
+                arr[i] = tempNode;
+            delete [] arr;
+
             
 
             if (group->parentGroup == NULL && !tempGroup) { //maybe able to combine if statements later
@@ -204,6 +212,10 @@ void TwoFiveTree::insertWord(Node word, bool start) {
                 group->parentGroup = newRoot;
                 nodeGroup->parentGroup = newRoot;
                 root = newRoot;
+                newRoot = NULL;
+                delete newRoot;
+                nodeGroup = NULL;
+                delete nodeGroup;
                 maxLevel++;
                 return;
             }
@@ -240,9 +252,18 @@ void TwoFiveTree::insertWord(Node word, bool start) {
                 nodeGroup->childGroups[0] = childArr[3];
                 nodeGroup->childGroups[1] = childArr[4];
                 nodeGroup->childGroups[2] = childArr[5];
+                //nodeGroup->childGroups[3] = NULL;
+                //nodeGroup->childGroups[4] = NULL;
                 nodeGroup->childGroups[0]->parentGroup = nodeGroup;
                 nodeGroup->childGroups[1]->parentGroup = nodeGroup;
                 nodeGroup->childGroups[2]->parentGroup = nodeGroup;
+
+                for (int i = 0; i < 6; i++)
+                    childArr[i] = NULL;
+                delete [] childArr; //figure out way to avoid deleting nodes
+
+                tempGroup = NULL;
+                delete tempGroup;
 
                 if (group->parentGroup == NULL) {
                     NodeGroup* newRoot = new NodeGroup;
@@ -252,12 +273,18 @@ void TwoFiveTree::insertWord(Node word, bool start) {
                     group->parentGroup = newRoot;
                     nodeGroup->parentGroup = newRoot;
                     root = newRoot;
+                    newRoot = NULL;
+                    delete newRoot;
+                    nodeGroup = NULL;
+                    delete nodeGroup;
                     maxLevel++;
                     return;
                 }
             }
             tempGroup = new NodeGroup; //took away the else statement
             tempGroup = nodeGroup;     //might need to delete one of two later on for memory
+            nodeGroup = NULL;
+            delete nodeGroup;
             group = group->parentGroup;
         }
     }
@@ -271,17 +298,43 @@ void TwoFiveTree::rangeSearchHelper(NodeGroup* nodeGroup, string start, string e
     if (nodeGroup == NULL)
         return;
     bool done = false; //might not work entirely correctly
-    for (int i = 0; i < 5; i++) {
+    /*for (int i = 0; i < 5; i++) {
         if (nodeGroup->childGroups[0] != NULL && nodeGroup->childGroups[i])
             rangeSearchHelper(nodeGroup->childGroups[i], start, end);
         if (!done) {
             done = true;
             for (int j = 0; j < 4; j++) {
+                if (nodeGroup->childGroups[j] != NULL) //dont know if will work, causes loop
+                    rangeSearchHelper(nodeGroup->childGroups[j], start, end);
                 if (nodeGroup->nodes[j].data == "")
                     break;
                 if (nodeGroup->nodes[j].data.compare(start) >= 0
                         && nodeGroup->nodes[j].data.compare(end) <= 0)
                     cout << nodeGroup->nodes[j].data << endl;
+            }
+        }
+    }*/
+    int startingI = 0;
+    bool arr[5] = {false};
+    for (int i = 0; i < 5; i++) {
+        if (nodeGroup->childGroups[0] != NULL && nodeGroup->childGroups[i] && !arr[i]) {
+            rangeSearchHelper(nodeGroup->childGroups[i], start, end);
+            arr[i] = true;
+        }
+        //dont include done yet
+        for (int j = 0; j < 4; j++) {
+            if (i != startingI)
+                break;
+            if (nodeGroup->childGroups[j] != NULL && !arr[j]) {
+                rangeSearchHelper(nodeGroup->childGroups[j], start, end);
+                arr[j] = true;
+            }
+            if (nodeGroup->nodes[j].data == "")
+                break;
+            if (nodeGroup->nodes[j].data.compare(start) >= 0 &&
+                    nodeGroup->nodes[j].data.compare(end) <= 0) {
+                cout << nodeGroup->nodes[j].data << endl;
+                startingI = i;
             }
         }
     }

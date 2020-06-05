@@ -20,9 +20,40 @@ int main(int argv, char** argc) {
 	while (getline (wordList, line) && (line.length() > 0)) {
 		tft.insertWord(line, true);
 	}
-	tft.searchWord("asdfadfa");
-	tft.searchWord("pickaxing");
-	tft.insertWord(Node("pickaxing"), false);
-	tft.insertWord(Node("adadssdf"), false);
-	tft.rangeSearch("dog", "drag");
+
+	int i = 0; 
+	while ( (int)argc[1][i] != 78 ) {
+		if ( argc[1][i] == 's' ) {
+			i += 2;
+			if ( argc[1][i] == 'a')
+				i += 5;
+			else
+				break;
+			string str = "";
+			while ( (int)argc[1][i] > 96 )
+				str += argc[1][i++];
+			tft.searchWord(str);
+		}
+		else if ( argc[1][i] == 'i' ) {
+			i += 7;
+			string str = "";
+			while ( (int)argc[1][i] > 96 )
+				str += argc[1][i++];
+			tft.insertWord(str, false);
+		}
+		else if ( argc[1][i] == 'r' ) {
+			i += 13;
+			string start = "";
+			while ( (int)argc[1][i] > 96 )
+				start += argc[1][i++];
+			i += 4;
+			string end = "";
+			while ( (int)argc[1][i] > 96 )
+				end += argc[1][i++];
+			tft.rangeSearch(start, end);
+		}
+		if ( argc[1][i] == ',' )
+			i++;
+		i++;
+	}
 }

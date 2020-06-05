@@ -27,10 +27,12 @@ struct NodeGroup {
         //children = new Node*[5];
         parentGroup = NULL;
         childGroups = new NodeGroup*[5];
+        for (int i = 0; i < 5; i++)
+            childGroups[i] = NULL;
     };
     ~NodeGroup() {
-        delete [] nodes;
-        //delete [] childGroups;
+        //delete [] nodes;
+        delete [] childGroups;
     }
 };
 
