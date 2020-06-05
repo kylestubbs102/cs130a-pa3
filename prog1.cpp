@@ -16,6 +16,15 @@ int main(int argv, char** argc) {
 		return 1;
 	}
 
+	TwoFiveTree test;
+	/*test.insertWord((Node)"abs",false);
+	test.insertWord((Node)"barn",false);
+	test.insertWord((Node)"cab",false);
+	test.insertWord((Node)"eats",false);
+	test.insertWord((Node)"dang",false);
+	test.preOrderTraversal();
+	test.printHeight();*/
+
 	TwoFiveTree tft;
 	while (getline (wordList, line) && (line.length() > 0)) {
 		tft.insertWord(line, true);

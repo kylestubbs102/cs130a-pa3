@@ -55,6 +55,7 @@ class TwoFiveTree {
         Node* getNode(string word);
         void rangeSearchHelper(NodeGroup* nodeGroup, string start, string end);
         void destructorHelper(NodeGroup* nodeGroup);
+        void preOrderTraversalHelper(NodeGroup* nodeGroup, int level);
 };
 
 #endif

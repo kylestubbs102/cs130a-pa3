@@ -16,7 +16,8 @@ TwoFiveTree::~TwoFiveTree() {
     }*/
     //destructorHelper(root);
 
-    delete root;
+    delete root;    //ONLY NEED TO DO THIS LEFT****************************************************
+                    //*****************************************************************************
 
     //worry about this later, tons of mistakes
 }
@@ -297,23 +298,6 @@ void TwoFiveTree::rangeSearch(string start, string end) {
 void TwoFiveTree::rangeSearchHelper(NodeGroup* nodeGroup, string start, string end) {
     if (nodeGroup == NULL)
         return;
-    bool done = false; //might not work entirely correctly
-    /*for (int i = 0; i < 5; i++) {
-        if (nodeGroup->childGroups[0] != NULL && nodeGroup->childGroups[i])
-            rangeSearchHelper(nodeGroup->childGroups[i], start, end);
-        if (!done) {
-            done = true;
-            for (int j = 0; j < 4; j++) {
-                if (nodeGroup->childGroups[j] != NULL) //dont know if will work, causes loop
-                    rangeSearchHelper(nodeGroup->childGroups[j], start, end);
-                if (nodeGroup->nodes[j].data == "")
-                    break;
-                if (nodeGroup->nodes[j].data.compare(start) >= 0
-                        && nodeGroup->nodes[j].data.compare(end) <= 0)
-                    cout << nodeGroup->nodes[j].data << endl;
-            }
-        }
-    }*/
     int startingI = 0;
     bool arr[5] = {false};
     for (int i = 0; i < 5; i++) {
@@ -321,7 +305,6 @@ void TwoFiveTree::rangeSearchHelper(NodeGroup* nodeGroup, string start, string e
             rangeSearchHelper(nodeGroup->childGroups[i], start, end);
             arr[i] = true;
         }
-        //dont include done yet
         for (int j = 0; j < 4; j++) {
             if (i != startingI)
                 break;
@@ -341,7 +324,43 @@ void TwoFiveTree::rangeSearchHelper(NodeGroup* nodeGroup, string start, string e
 }
 
 void TwoFiveTree::preOrderTraversal() {
+    preOrderTraversalHelper(root, 1);
+    cout << endl;
+}
 
+void TwoFiveTree::preOrderTraversalHelper(NodeGroup* nodeGroup, int level) {
+    if (nodeGroup == NULL)
+        return;
+    cout << "(";
+    if (level == maxLevel) {
+        int i;
+        for (i = 0; i < 4 && nodeGroup->nodes[i].data != ""; i++) {
+            cout << nodeGroup->nodes[i].data << ":" << nodeGroup->nodes[i].counter;
+            if (nodeGroup->nodes[i+1].data == "" || i == 3) {
+                i++;
+                break;
+            }
+            cout << ",";
+        }
+        for (int j = 0; j <= i; j++) {
+            cout << "()";
+        }
+    }
+    else {
+        int i;
+        for (i = 0; i < 4 && nodeGroup->nodes[i].data != ""; i++) {
+            cout << nodeGroup->nodes[i].data << ":" << nodeGroup->nodes[i].counter;
+            if (nodeGroup->nodes[i+1].data == "" || i == 3) {
+                i++;
+                break;
+            }
+            cout << ",";
+        }
+        for (int i = 0; nodeGroup->childGroups[i] != NULL; i++) {
+                preOrderTraversalHelper(nodeGroup->childGroups[i], level+1);
+        }
+    }
+    cout << ")";
 }
 
 void TwoFiveTree::printHeight() {
