@@ -26,12 +26,24 @@ int main(int argv, char** argc) {
 	test.printHeight();*/
 
 	TwoFiveTree tft;
+	AVLTree avl;
 	while (getline (wordList, line) && (line.length() > 0)) {
 		tft.insertWord(line, true);
+		avl.insertWord(line, true);
 	}
 
+	avl.printHeight();
+	AVLTree testAVL;
+	testAVL.insertWord("dog", true);
+	testAVL.insertWord("eog", true);
+	testAVL.insertWord("fog", true);
+	testAVL.insertWord("bog", true);
+	testAVL.insertWord("aog", true);
+	testAVL.insertWord("zog", true);
+	testAVL.printHeight();
+
 	int i = 0; 
-	while ( (int)argc[1][i] != 78 ) {
+	while ( argc[1] && (int)argc[1][i] != 78 ) {
 		if ( argc[1][i] == 's' ) {
 			i += 2;
 			if ( argc[1][i] == 'a')
@@ -42,6 +54,7 @@ int main(int argv, char** argc) {
 			while ( (int)argc[1][i] > 96 )
 				str += argc[1][i++];
 			tft.searchWord(str);
+			avl.searchWord(str);
 		}
 		else if ( argc[1][i] == 'i' ) {
 			i += 7;
@@ -49,6 +62,7 @@ int main(int argv, char** argc) {
 			while ( (int)argc[1][i] > 96 )
 				str += argc[1][i++];
 			tft.insertWord(str, false);
+			avl.insertWord(str, false);
 		}
 		else if ( argc[1][i] == 'r' ) {
 			i += 13;
@@ -60,6 +74,7 @@ int main(int argv, char** argc) {
 			while ( (int)argc[1][i] > 96 )
 				end += argc[1][i++];
 			tft.rangeSearch(start, end);
+			avl.rangeSearch(start, end);
 		}
 		if ( argc[1][i] == ',' )
 			i++;

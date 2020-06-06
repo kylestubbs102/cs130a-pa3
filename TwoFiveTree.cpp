@@ -345,7 +345,7 @@ void TwoFiveTree::preOrderTraversalHelper(NodeGroup* nodeGroup, int level) {
         for (int j = 0; j <= i; j++) {
             cout << "()";
         }
-    }
+    }                                            //maybe can combine these two
     else {
         int i;
         for (i = 0; i < 4 && nodeGroup->nodes[i].data != ""; i++) {
