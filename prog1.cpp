@@ -9,8 +9,8 @@ int main(int argv, char** argc) {
 
 	ifstream wordList;
 	string line;
-	//wordList.open("/autograder/submission/PA3_dataset.txt");
-	wordList.open("PA3_dataset.txt");
+	wordList.open("/autograder/submission/PA3_dataset.txt");
+	//wordList.open("PA3_dataset.txt");
 	if (!wordList) {
 		cout << "could not open file";
 		return 1;
