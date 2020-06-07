@@ -16,15 +16,6 @@ int main(int argv, char** argc) {
 		return 1;
 	}
 
-	TwoFiveTree test;
-	test.insertWord((Node)"abs",true);
-	test.insertWord((Node)"barn",true);
-	test.insertWord((Node)"cab",true);
-	test.insertWord((Node)"eats",true);
-	test.insertWord((Node)"dang",true);
-	//test.preOrderTraversal();
-	//test.printHeight();
-
 	TwoFiveTree tft;
 	AVLTree avl;
 	while (getline (wordList, line) && (line.length() > 0)) {
@@ -32,24 +23,13 @@ int main(int argv, char** argc) {
 		avl.insertWord(line, true);
 	}
 
+	//****************************************************************
 	//tft.preOrderTraversal();
 	//tft.printHeight();
-
+	//avl.preOrderTraversal();
 	//avl.printHeight();
-	AVLTree testAVL;
-	testAVL.insertWord("dog", true);
-	testAVL.insertWord("eog", true);
-	testAVL.insertWord("fog", true);
-	testAVL.insertWord("bog", true);
-	testAVL.insertWord("aog", true);
-	testAVL.insertWord("zog", true);
-	//testAVL.printHeight();
-	//testAVL.rangeSearch("a","zzzz");
-	//avl.rangeSearch("a","{");
-	//avl.preOrderTraversal();
-	//avl.preOrderTraversal();
-
-	//add comments to help graders
+	//****************************************************************
+	//These are the functions with the words from the data set
 
 	int i = 0; 
 	while ( argc[1] && (int)argc[1][i] != 78 ) {
@@ -89,4 +69,20 @@ int main(int argv, char** argc) {
 			i++;
 		i++;
 	}
+
+	//TwoFiveTree testTwoFive;
+	//testTwoFive.insertWord((Node)"dog",true);
+	//testTwoFive.preOrderTraversal();
+	//testTwoFive.printHeight();
+	//
+	//This is how you would insert into a 2-5 tree if
+	//you wanted to input your own numbers to test it out.
+	//It's necessary to include (Node) with my implementation.
+	
+	//AVLTree testAVL;
+	//testAVL.insertWord("dog", true);
+	//testAVL.printHeight();
+	//avl.preOrderTraversal();
+	//
+	//And this is how you would do it with the AVL tree.
 }

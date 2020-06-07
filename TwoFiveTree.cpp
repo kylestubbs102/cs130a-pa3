@@ -10,29 +10,21 @@ TwoFiveTree::TwoFiveTree() {
 }
 
 TwoFiveTree::~TwoFiveTree() {
-    /*for (int i = 0; i < 5; i++) {
-        
-    }*/
-    //destructorHelper(root);
-
-    delete root;    //ONLY NEED TO DO THIS LEFT****************************************************
-                    //*****************************************************************************
-
-    //worry about this later, tons of mistakes
+    destructorHelper(root);
 }
 
-/*void TwoFiveTree::destructorHelper(NodeGroup* nodeGroup) {
+void TwoFiveTree::destructorHelper(NodeGroup* nodeGroup) {
     for (int i = 0; i < 5; i++) {
         if (nodeGroup->childGroups[i] != NULL)
             destructorHelper(nodeGroup->childGroups[i]);
     }
-    delete [] nodeGroup->nodes; //maybe just delete nodes in NodeGroup destructor and
-                                //only childGroups here
-}*/
+    delete [] nodeGroup->nodes; 
+    delete [] nodeGroup->childGroups;
+}
 
 void TwoFiveTree::searchWord(string word) {
-    NodeGroup* group = root; //stands for exists function
-    while (true) { //maybe change later
+    NodeGroup* group = root;
+    while (true) {
         for (int i = 0; i < 4; i++) {
             if (word.compare(group->nodes[i].data) == 0) {
                 cout << word << " found, count = " << group->nodes[i].counter << endl;
@@ -43,10 +35,9 @@ void TwoFiveTree::searchWord(string word) {
             break;
         int counter = 0;
         while (counter < 4) {
-            if (word.compare(group->nodes[counter].data) < 0) //maybe combine the if statements
+            if (word.compare(group->nodes[counter].data) < 0)
                 break;
             if (group->nodes[counter].data == "") {
-                //counter--;
                 break;
             }
             counter++;
@@ -61,15 +52,15 @@ void TwoFiveTree::insertWord(Node word, bool start) {
         nodeCount++;
         maxLevel++;
         root->nodes[0].counter = word.counter;
-        root->nodes[0].data = word.data; //maybe change this to just = node later
+        root->nodes[0].data = word.data;
         if (!start) {
             cout << word.data << " inserted, new count = 1" << endl;
         }
         return;
     }
 
-    NodeGroup* group = root; //stands for exists function
-    while (true) { //maybe change later
+    NodeGroup* group = root;
+    while (true) {
         for (int i = 0; i < 4; i++) {
             if (word.data.compare(group->nodes[i].data) == 0) {
                 group->nodes[i].counter++;
@@ -83,10 +74,9 @@ void TwoFiveTree::insertWord(Node word, bool start) {
             break;
         int counter = 0;
         while (counter < 4) {
-            if (word.data.compare(group->nodes[counter].data) < 0) //maybe combine the if statements
+            if (word.data.compare(group->nodes[counter].data) < 0)
                 break;
             if (group->nodes[counter].data == "") {
-                //counter--;
                 break;
             }
             counter++;
@@ -100,17 +90,14 @@ void TwoFiveTree::insertWord(Node word, bool start) {
 
     NodeGroup* tempGroup = NULL;
 
-    //NodeGroup tempGroup;
-    //tempGroup->children*[0] = NULL;
     group = root;
-    while (group->childGroups[0] != NULL) { //maybe change to has child function
-        bool end = false; //???
+    while (group->childGroups[0] != NULL) {
+        bool end = false;
         int counter = 0;
         while (counter < 4) {
-            if (word.data.compare(group->nodes[counter].data) < 0) //maybe combine the if statements
+            if (word.data.compare(group->nodes[counter].data) < 0)
                 break;
             if (group->nodes[counter].data == "") {
-                //counter--;
                 break;
             }
             counter++;
@@ -119,8 +106,7 @@ void TwoFiveTree::insertWord(Node word, bool start) {
     }
     while (true) {
         if (group->nodes[3].data == "") {
-            if (tempGroup) {     //tempGroup may be weird or off
-                //int childGroupIndex; dont need
+            if (tempGroup) {
                 for (int i = 0; i < 5; i++) {
                     if (group->childGroups[i] == NULL) {
                         group->childGroups[i] = tempGroup;
@@ -135,27 +121,25 @@ void TwoFiveTree::insertWord(Node word, bool start) {
                         group->childGroups[i] = tempGroup;
                         group->childGroups[i]->parentGroup = group;
                         break;
-                    } //sets parentGroup correctly 
+                    }
                 }
                 tempGroup = NULL;
                 delete tempGroup;
-                //group->parentGroup->childGroups[count+1];
-                //return; //maybe change back to break
             }
             int count = 0;
             while (count < 4) {
-                if (count == 3 || group->nodes[count].data == "") { //maybe change to just 2nd statement
+                if (count == 3 || group->nodes[count].data == "") {
                     group->nodes[count].data = word.data;
                     group->nodes[count].counter = 1;
-                    return; //break
+                    return;
                 }
                 else if (word.data.compare(group->nodes[count].data) < 0) {
                     for (int i = 2; i >= count; i--) {
-                        group->nodes[i+1] = group->nodes[i];  //might not work, think it does tho
+                        group->nodes[i+1] = group->nodes[i];
                     }
                     group->nodes[count].data = word.data;
                     group->nodes[count].counter = 1;
-                    return; //maybe change to break if it doesn't work
+                    return;
                 }
                 count++;
             }
@@ -163,7 +147,6 @@ void TwoFiveTree::insertWord(Node word, bool start) {
         else {
             Node* arr = new Node[5];
             int i = 0;
-            //Node temp(word); //maybe change later because of memory issues
             while (i < 5) {
                 if (i == 4) {
                     arr[4] = word;
@@ -175,7 +158,6 @@ void TwoFiveTree::insertWord(Node word, bool start) {
                 }
                 else {
                     arr[i] = group->nodes[i];
-                    //break;
                 }
                 i++;
             }
@@ -183,11 +165,11 @@ void TwoFiveTree::insertWord(Node word, bool start) {
                 arr[i+1] = group->nodes[i];
                 i++;
             }
-            //separate them and put middle in top one
+            
             group->nodes[0] = arr[0];
             group->nodes[1] = arr[1];
             group->nodes[2].data = "";
-            group->nodes[3].data = ""; //check later, maybe use delete for memory
+            group->nodes[3].data = "";
 
             word = arr[2];
             NodeGroup* nodeGroup = new NodeGroup;
@@ -201,9 +183,9 @@ void TwoFiveTree::insertWord(Node word, bool start) {
 
             
 
-            if (group->parentGroup == NULL && !tempGroup) { //maybe able to combine if statements later
+            if (group->parentGroup == NULL && !tempGroup) {
                 NodeGroup* newRoot = new NodeGroup;
-                newRoot->nodes[0] = word; //might not be on heap
+                newRoot->nodes[0] = word;
                 newRoot->childGroups[0] = group;
                 newRoot->childGroups[1] = nodeGroup;
                 group->parentGroup = newRoot;
@@ -216,8 +198,8 @@ void TwoFiveTree::insertWord(Node word, bool start) {
                 maxLevel++;
                 return;
             }
-            else if (tempGroup) { //tempGroup for 6th child
-                NodeGroup** childArr = new NodeGroup*[6]; //memory later on
+            else if (tempGroup) {
+                NodeGroup** childArr = new NodeGroup*[6];
                 int childIndex = 0;
                 while (childIndex < 6) {
                     if (childIndex == 5) {
@@ -249,15 +231,13 @@ void TwoFiveTree::insertWord(Node word, bool start) {
                 nodeGroup->childGroups[0] = childArr[3];
                 nodeGroup->childGroups[1] = childArr[4];
                 nodeGroup->childGroups[2] = childArr[5];
-                //nodeGroup->childGroups[3] = NULL;
-                //nodeGroup->childGroups[4] = NULL;
                 nodeGroup->childGroups[0]->parentGroup = nodeGroup;
                 nodeGroup->childGroups[1]->parentGroup = nodeGroup;
                 nodeGroup->childGroups[2]->parentGroup = nodeGroup;
 
                 for (int i = 0; i < 6; i++)
                     childArr[i] = NULL;
-                delete [] childArr; //figure out way to avoid deleting nodes
+                delete [] childArr;
 
                 tempGroup = NULL;
                 delete tempGroup;
@@ -278,8 +258,8 @@ void TwoFiveTree::insertWord(Node word, bool start) {
                     return;
                 }
             }
-            tempGroup = new NodeGroup; //took away the else statement
-            tempGroup = nodeGroup;     //might need to delete one of two later on for memory
+            tempGroup = new NodeGroup;
+            tempGroup = nodeGroup;
             nodeGroup = NULL;
             delete nodeGroup;
             group = group->parentGroup;

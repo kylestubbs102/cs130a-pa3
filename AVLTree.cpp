@@ -62,14 +62,14 @@ void AVLTree::insertWord(string word, bool start) {
     if (root == NULL) {
         root = new AVLNode(word);
         nodeCount = 1;
-	if (!start)
-      		  cout << word << " inserted, new count = 1" << endl;
+		if (!start)
+      		cout << word << " inserted, new count = 1" << endl;
         return;
     }
     AVLNode* temp = getNode(word);
     if ( temp ) {
         temp->counter++;
-	if (!start)
+		if (!start)
         	cout << word << " inserted, new count = " << 
                  	   temp->counter << endl;
 		temp = NULL;
@@ -229,5 +229,5 @@ void AVLTree::preOrderTraversalHelper(AVLNode* node) {
 }
 
 void AVLTree::printHeight() {
-	cout << height(root) << endl;
+	cout << "Height = " << height(root) << endl;
 }

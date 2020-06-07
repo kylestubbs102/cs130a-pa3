@@ -6,8 +6,6 @@ using namespace std;
 struct Node {
     string data;
     int counter;
-    //string* values;
-    //Node** nodes;
     Node(string data1 = "") {
         data = data1;
         counter = 1;
@@ -25,10 +23,6 @@ struct NodeGroup {
         for (int i = 0; i < 5; i++)
             childGroups[i] = NULL;
     };
-    ~NodeGroup() {
-        //delete [] nodes;
-        delete [] childGroups;
-    }
 };
 
 class TwoFiveTree {
