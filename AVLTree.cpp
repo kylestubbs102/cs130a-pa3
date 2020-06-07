@@ -172,6 +172,8 @@ void AVLTree::rotateLeftLeft(AVLNode* node) { //rotate right
 	AVLNode* temp = new AVLNode;
 	temp = node->left;
 	node->left = temp->right;
+	if (node->left)
+		node->left->parent = node;
 	node->parent = temp; //?? think it works
 	temp->right = node;
 	temp = NULL;
@@ -202,6 +204,8 @@ void AVLTree::rotateRightRight(AVLNode* node) { //rotate left
 	AVLNode* temp = new AVLNode;
 	temp = node->right;
 	node->right = temp->left;
+	if (node->right)
+		node->right->parent = node;
 	node->parent = temp;
 	temp->left = node;
 	temp = NULL;
