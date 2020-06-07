@@ -17,13 +17,13 @@ int main(int argv, char** argc) {
 	}
 
 	TwoFiveTree test;
-	/*test.insertWord((Node)"abs",false);
-	test.insertWord((Node)"barn",false);
-	test.insertWord((Node)"cab",false);
-	test.insertWord((Node)"eats",false);
-	test.insertWord((Node)"dang",false);
-	test.preOrderTraversal();
-	test.printHeight();*/
+	test.insertWord((Node)"abs",true);
+	test.insertWord((Node)"barn",true);
+	test.insertWord((Node)"cab",true);
+	test.insertWord((Node)"eats",true);
+	test.insertWord((Node)"dang",true);
+	//test.preOrderTraversal();
+	//test.printHeight();
 
 	TwoFiveTree tft;
 	AVLTree avl;
@@ -31,6 +31,9 @@ int main(int argv, char** argc) {
 		tft.insertWord(line, true);
 		avl.insertWord(line, true);
 	}
+
+	//tft.preOrderTraversal();
+	//tft.printHeight();
 
 	//avl.printHeight();
 	AVLTree testAVL;
@@ -43,6 +46,10 @@ int main(int argv, char** argc) {
 	//testAVL.printHeight();
 	//testAVL.rangeSearch("a","zzzz");
 	//avl.rangeSearch("a","{");
+	//avl.preOrderTraversal();
+	//avl.preOrderTraversal();
+
+	//add comments to help graders
 
 	int i = 0; 
 	while ( argc[1] && (int)argc[1][i] != 78 ) {

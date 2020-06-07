@@ -21,24 +21,25 @@ class AVLTree {
         AVLTree();
         ~AVLTree();
         void searchWord(string word);
-	void insertWord(string word, bool start);
+	    void insertWord(string word, bool start);
         void rangeSearch(string start, string end);
         void preOrderTraversal();
         void printHeight();
     private:
         int nodeCount;
         AVLNode* root;
-	int height(AVLNode* node);
-	int heightDifference(AVLNode* node);
-	void balance(AVLNode* node);
-	void rotateLeftLeft(AVLNode* node);
-	void rotateLeftRight(AVLNode* node);
-	void rotateRightLeft(AVLNode* node);
-	void rotateRightRight(AVLNode* node);
+	    int height(AVLNode* node);
+	    int heightDifference(AVLNode* node);
+	    void balance(AVLNode* node);
+	    void rotateLeftLeft(AVLNode* node);
+	    void rotateLeftRight(AVLNode* node);
+	    void rotateRightLeft(AVLNode* node);
+	    void rotateRightRight(AVLNode* node);
         bool exists(string word);
         AVLNode* getNode(string word);
         void rangeSearchHelper(AVLNode* node, string start, string end);
         void destructorHelper(AVLNode* node);
+	    void preOrderTraversalHelper(AVLNode* node);
 };
 
 #endif

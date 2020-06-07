@@ -8,7 +8,7 @@ AVLTree::AVLTree() {
 }
 
 AVLTree::~AVLTree() {
-    //destructorHelper(root);
+    destructorHelper(root);
 }
 
 void AVLTree::destructorHelper(AVLNode* node) {
@@ -72,7 +72,7 @@ void AVLTree::insertWord(string word, bool start) {
 	if (!start)
         	cout << word << " inserted, new count = " << 
                  	   temp->counter << endl;
-	temp = NULL;
+		temp = NULL;
         delete temp;
         return;
     }
@@ -101,17 +101,13 @@ void AVLTree::insertWord(string word, bool start) {
     }
     while (temp != NULL) {
     	balance(temp);
-    	temp = temp->parent; //might not work
+    	temp = temp->parent;
     }
     temp = NULL;
     delete temp;
     if (!start)
     	cout << word << " inserted, new count = 1" << endl;
     nodeCount++;
-    //call rotations here
-    //maybe call balance in a loop?
-    //or maybe create a function called balanceCheck, starts from root and checks every node
-    //*******************************************************************
 }
 
 int AVLTree::height(AVLNode* node) {
@@ -123,34 +119,25 @@ int AVLTree::height(AVLNode* node) {
 		else
 			return 1 + rightHeight;
 	}
-	return 0; //if it's null
+	return 0;
 }
 
 int AVLTree::heightDifference(AVLNode* node) {
 	int leftHeight = height(node->left);
 	int rightHeight = height(node->right);
-//	if (leftHeight > rightHeight)
-//		return leftHeight - rightHeight;
-//	else
-//		return rightHeight - leftHeight;
 	return leftHeight - rightHeight;
-	//positive if left height is bigger
-
-	//else
-	//	return rightHeight - leftHeight;
-	//maybe change so it only returns positive numbers
 }
 
 void AVLTree::balance(AVLNode* node) {
 	int difference = heightDifference(node);
-	if (difference > 2) { //leftHeight is bigger
-		if (heightDifference(node->left) > 0)//of left subtree, leftHeight is bigger
+	if (difference > 2) {
+		if (heightDifference(node->left) > 0)
 			rotateLeftLeft(node);
 		else
 			rotateLeftRight(node);
 	}
 	else if (difference < -2) {
-		if (heightDifference(node->right) > 0)//of right subtree, leftHeight is bigger
+		if (heightDifference(node->right) > 0)
 			rotateRightLeft(node);
 		else
 			rotateRightRight(node);
@@ -158,7 +145,7 @@ void AVLTree::balance(AVLNode* node) {
 	int x;
 }
 
-void AVLTree::rotateLeftLeft(AVLNode* node) { //rotate right
+void AVLTree::rotateLeftLeft(AVLNode* node) {
 	if (node == root) {
 		root = node->left;
 	}
@@ -174,7 +161,7 @@ void AVLTree::rotateLeftLeft(AVLNode* node) { //rotate right
 	node->left = temp->right;
 	if (node->left)
 		node->left->parent = node;
-	node->parent = temp; //?? think it works
+	node->parent = temp;
 	temp->right = node;
 	temp = NULL;
 	delete temp;
@@ -190,13 +177,13 @@ void AVLTree::rotateRightLeft(AVLNode* node) {
 	rotateRightRight(node);
 }
 
-void AVLTree::rotateRightRight(AVLNode* node) { //rotate left
+void AVLTree::rotateRightRight(AVLNode* node) {
 	if (node == root) {
 		root = node->right;
 	}
 	else {
 		if (node->data.compare(node->parent->data) < 0)
-			node->parent->left = node->right; //might need to be fixed
+			node->parent->left = node->right;
 		else
 			node->parent->right = node->right;
 	}
@@ -226,10 +213,21 @@ void AVLTree::rangeSearchHelper(AVLNode* node, string start, string end) {
 }
 
 void AVLTree::preOrderTraversal() {
-    //you know the algorithm, but you gotta add more stuff
+	preOrderTraversalHelper(root);
+	cout << endl;
+}
+
+void AVLTree::preOrderTraversalHelper(AVLNode* node) {
+	if (!node) {
+		cout << "()";
+		return;
+	}
+	cout << "(" << node->data << ":" << node->counter;
+	preOrderTraversalHelper(node->left);
+	preOrderTraversalHelper(node->right);
+	cout << ")";
 }
 
 void AVLTree::printHeight() {
 	cout << height(root) << endl;
-	cout << heightDifference(root) << endl;
 }

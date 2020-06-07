@@ -5,7 +5,6 @@ using namespace std;
 
 TwoFiveTree::TwoFiveTree() {
     nodeCount = 0;
-    nodeGroupCount = 0;
     maxLevel = 0;
     root = new NodeGroup();
 }
@@ -58,12 +57,9 @@ void TwoFiveTree::searchWord(string word) {
 }
 
 void TwoFiveTree::insertWord(Node word, bool start) {
-    //maybe change to root later
     if (nodeCount == 0) {
-        nodeCount++; //???
-        nodeGroupCount++; //???
-        maxLevel++; //might need this for height function
-        //root = new NodeGroup;
+        nodeCount++;
+        maxLevel++;
         root->nodes[0].counter = word.counter;
         root->nodes[0].data = word.data; //maybe change this to just = node later
         if (!start) {
@@ -345,7 +341,7 @@ void TwoFiveTree::preOrderTraversalHelper(NodeGroup* nodeGroup, int level) {
         for (int j = 0; j <= i; j++) {
             cout << "()";
         }
-    }                                            //maybe can combine these two
+    }
     else {
         int i;
         for (i = 0; i < 4 && nodeGroup->nodes[i].data != ""; i++) {
@@ -356,7 +352,7 @@ void TwoFiveTree::preOrderTraversalHelper(NodeGroup* nodeGroup, int level) {
             }
             cout << ",";
         }
-        for (int i = 0; nodeGroup->childGroups[i] != NULL; i++) {
+        for (int i = 0; i < 5; i++) {
                 preOrderTraversalHelper(nodeGroup->childGroups[i], level+1);
         }
     }
