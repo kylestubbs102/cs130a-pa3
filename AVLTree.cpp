@@ -8,7 +8,7 @@ AVLTree::AVLTree() {
 }
 
 AVLTree::~AVLTree() {
-    destructorHelper(root);
+    //destructorHelper(root);
 }
 
 void AVLTree::destructorHelper(AVLNode* node) {
@@ -99,12 +99,18 @@ void AVLTree::insertWord(string word, bool start) {
             }
         }
     }
+    while (temp != NULL) {
+    	balance(temp);
+    	temp = temp->parent; //might not work
+    }
     temp = NULL;
     delete temp;
     if (!start)
     	cout << word << " inserted, new count = 1" << endl;
     nodeCount++;
     //call rotations here
+    //maybe call balance in a loop?
+    //or maybe create a function called balanceCheck, starts from root and checks every node
     //*******************************************************************
 }
 
@@ -123,10 +129,11 @@ int AVLTree::height(AVLNode* node) {
 int AVLTree::heightDifference(AVLNode* node) {
 	int leftHeight = height(node->left);
 	int rightHeight = height(node->right);
-	if (leftHeight > rightHeight)
-		return leftHeight - rightHeight;
-	else
-		return rightHeight - leftHeight;
+//	if (leftHeight > rightHeight)
+//		return leftHeight - rightHeight;
+//	else
+//		return rightHeight - leftHeight;
+	return leftHeight - rightHeight;
 	//positive if left height is bigger
 
 	//else
@@ -136,13 +143,69 @@ int AVLTree::heightDifference(AVLNode* node) {
 
 void AVLTree::balance(AVLNode* node) {
 	int difference = heightDifference(node);
-	if (difference > 2) { //will need to change to avoid signs
-
+	if (difference > 2) { //leftHeight is bigger
+		if (heightDifference(node->left) > 0)//of left subtree, leftHeight is bigger
+			rotateLeftLeft(node);
+		else
+			rotateLeftRight(node);
 	}
 	else if (difference < -2) {
-
+		if (heightDifference(node->right) > 0)//of right subtree, leftHeight is bigger
+			rotateRightLeft(node);
+		else
+			rotateRightRight(node);
 	}
 	int x;
+}
+
+void AVLTree::rotateLeftLeft(AVLNode* node) { //rotate right
+	if (node == root) {
+		root = node->left;
+	}
+	else {
+		if (node->data.compare(node->parent->data) < 0)
+			node->parent->left = node->left;
+		else
+			node->parent->right = node->left;
+	}
+	node->left->parent = node->parent;
+	AVLNode* temp = new AVLNode;
+	temp = node->left;
+	node->left = temp->right;
+	node->parent = temp; //?? think it works
+	temp->right = node;
+	temp = NULL;
+	delete temp;
+}
+
+void AVLTree::rotateLeftRight(AVLNode* node) {
+	rotateRightRight(node->left);
+	rotateLeftLeft(node);
+}
+
+void AVLTree::rotateRightLeft(AVLNode* node) {
+	rotateLeftLeft(node->right);
+	rotateRightRight(node);
+}
+
+void AVLTree::rotateRightRight(AVLNode* node) { //rotate left
+	if (node == root) {
+		root = node->right;
+	}
+	else {
+		if (node->data.compare(node->parent->data) < 0)
+			node->parent->left = node->right; //might need to be fixed
+		else
+			node->parent->right = node->right;
+	}
+	node->right->parent = node->parent;
+	AVLNode* temp = new AVLNode;
+	temp = node->right;
+	node->right = temp->left;
+	node->parent = temp;
+	temp->left = node;
+	temp = NULL;
+	delete temp;
 }
 
 void AVLTree::rangeSearch(string start, string end) {

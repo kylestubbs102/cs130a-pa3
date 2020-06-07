@@ -31,6 +31,10 @@ class AVLTree {
 	int height(AVLNode* node);
 	int heightDifference(AVLNode* node);
 	void balance(AVLNode* node);
+	void rotateLeftLeft(AVLNode* node);
+	void rotateLeftRight(AVLNode* node);
+	void rotateRightLeft(AVLNode* node);
+	void rotateRightRight(AVLNode* node);
         bool exists(string word);
         AVLNode* getNode(string word);
         void rangeSearchHelper(AVLNode* node, string start, string end);

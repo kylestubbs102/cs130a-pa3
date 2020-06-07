@@ -32,7 +32,7 @@ int main(int argv, char** argc) {
 		avl.insertWord(line, true);
 	}
 
-	avl.printHeight();
+	//avl.printHeight();
 	AVLTree testAVL;
 	testAVL.insertWord("dog", true);
 	testAVL.insertWord("eog", true);
@@ -40,7 +40,9 @@ int main(int argv, char** argc) {
 	testAVL.insertWord("bog", true);
 	testAVL.insertWord("aog", true);
 	testAVL.insertWord("zog", true);
-	testAVL.printHeight();
+	//testAVL.printHeight();
+	//testAVL.rangeSearch("a","zzzz");
+	//avl.rangeSearch("a","{");
 
 	int i = 0; 
 	while ( argc[1] && (int)argc[1][i] != 78 ) {
